@@ -13,7 +13,7 @@ class ConcurrentCounterTest {
     public static boolean headerPrinted = false;
     @ParameterizedTest(name = "Test: {1}")
     @MethodSource("counterImplementations")
-    public void multipleThreadsVerifyBrokenCounterFails(Counter counter, String counterName) {
+    public void testCountersConcurrentUpdates(Counter counter, String counterName) {
         long startTime = System.nanoTime();
         long durationNano = 0;
         int nThreads = 200;
