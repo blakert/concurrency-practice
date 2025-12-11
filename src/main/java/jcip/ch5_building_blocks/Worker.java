@@ -11,6 +11,7 @@ public class Worker<In,Out> implements Runnable{
     private final Function<In, Out> processor;
     private final CountDownLatch upstreamDoneLatch;
     private final CountDownLatch doneLatch;
+
     public Worker(BlockingQueue<In> inputQueue, BlockingQueue<Out> outputQueue,
             Function<In, Out> processor, CountDownLatch upstreamDoneLatch,
                   CountDownLatch doneLatch) {
