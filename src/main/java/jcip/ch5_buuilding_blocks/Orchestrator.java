@@ -10,14 +10,13 @@ public class Orchestrator {
         int nConsumers = 2;
         CountDownLatch start = new CountDownLatch(1);
         try (ExecutorService executorService = Executors.newFixedThreadPool(3)){
-            executorService.submit(new Producer(workQueue, 0, 20,
-                    start));
+            executorService.submit(new Producer(workQueue, 0, 20));
             for (int i = 0; i < nConsumers; i++) {
-                executorService.submit(new Consumer(workQueue, start));
+                executorService.submit(new Consumer(workQueue));
             }
+            System.out.println("start latch launched");
+            start.countDown();
         }
-        System.out.println("start latch launched");
-        start.countDown();
     }
 
 }

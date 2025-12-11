@@ -6,18 +6,15 @@ import java.util.concurrent.CountDownLatch;
 public class Consumer implements Runnable {
     int numProcessed;
     BlockingQueue<String> workQueue;
-    CountDownLatch startLatch;
-    public Consumer(BlockingQueue<String> workQueue, CountDownLatch startLatch) {
+    public Consumer(BlockingQueue<String> workQueue) {
         this.workQueue = workQueue;
         numProcessed = 0;
-        this.startLatch = startLatch;
     }
 
     @Override
     public void run() {
         while(true) {
             try {
-                startLatch.await();
                 String target = workQueue.take();
                 if (target.equals(Orchestrator.POSION_PILL)) {
                     workQueue.put(Orchestrator.POSION_PILL);

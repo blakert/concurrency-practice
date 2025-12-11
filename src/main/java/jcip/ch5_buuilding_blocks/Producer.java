@@ -7,14 +7,11 @@ public class Producer implements Runnable {
     BlockingQueue<String> workQueue;
     int startNum;
     int endNum;
-    CountDownLatch startLatch;
-    public Producer(BlockingQueue<String> workQueue, int startNum, int endNum,
-                    CountDownLatch startLatch) {
+    public Producer(BlockingQueue<String> workQueue, int startNum, int endNum) {
         this.workQueue = workQueue;
         this.startNum = startNum;
         this.endNum = endNum;
         assert endNum > startNum;
-        this.startLatch = startLatch;
     }
 
     @Override
