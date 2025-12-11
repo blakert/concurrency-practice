@@ -1,9 +1,9 @@
-package jcip.ch5_buuilding_blocks;
+package jcip.ch5_building_blocks;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
 
 public class Producer implements Runnable {
+    public static String POISON_PILL = "";
     BlockingQueue<String> workQueue;
     int startNum;
     int endNum;
@@ -22,7 +22,7 @@ public class Producer implements Runnable {
                 workQueue.put("item" + i);
             }
             System.out.println("Producer thread: " + this + " sent poison pill");
-            workQueue.put(Orchestrator.POSION_PILL);
+            workQueue.put(Producer.POISON_PILL);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
