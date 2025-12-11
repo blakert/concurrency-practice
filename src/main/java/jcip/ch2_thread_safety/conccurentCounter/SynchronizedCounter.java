@@ -1,4 +1,4 @@
-package jcip.ch2_thread_safety;
+package jcip.ch2_thread_safety.conccurentCounter;
 
 public class SynchronizedCounter implements Counter {
     volatile int count = 0;

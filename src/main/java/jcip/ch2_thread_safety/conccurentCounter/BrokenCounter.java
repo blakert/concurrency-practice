@@ -1,4 +1,4 @@
-package jcip.ch2_thread_safety;
+package jcip.ch2_thread_safety.conccurentCounter;
 
 public class BrokenCounter implements Counter{
     int count = 0;

@@ -1,5 +1,9 @@
-package jcip.ch2_thread_safety;
+package jcip.ch2_thread_safety.concurrentCounter;
 
+import jcip.ch2_thread_safety.conccurentCounter.AtomicCounter;
+import jcip.ch2_thread_safety.conccurentCounter.BrokenCounter;
+import jcip.ch2_thread_safety.conccurentCounter.Counter;
+import jcip.ch2_thread_safety.conccurentCounter.SynchronizedCounter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

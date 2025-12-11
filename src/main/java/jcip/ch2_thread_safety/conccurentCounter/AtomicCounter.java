@@ -1,4 +1,4 @@
-package jcip.ch2_thread_safety;
+package jcip.ch2_thread_safety.conccurentCounter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
