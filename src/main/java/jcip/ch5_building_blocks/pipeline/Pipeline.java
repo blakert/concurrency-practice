@@ -21,7 +21,23 @@ public class Pipeline<I,O> {
         this.middleStages = stages;
         this.endStage = endStage;
     }
+    // what would it take to now run the pipeline?
+    // source stage -> fill out with a worker and place items on input queue
+    public void run(){
+        sourceStage.run();
+        for(PipelineStage stage : middleStages) {
+            stage.run();
+        }
+    }
 
+    public void awaitTermination() throws InterruptedException {
+        endStage.awaitTermination();
+    }
+    // not great since the final result isn't getting accumulated - it's limited by Q capacity.
+    // result will come out piece by piece as we read from the blocking queue.
+    public BlockingQueue<O> getResult() {
+            return endStage.getOutputQueue();
+    }
     public static Start builder() {
         return new Start();
     }
