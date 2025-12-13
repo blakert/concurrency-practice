@@ -1,4 +1,4 @@
-package jcip.ch5_building_blocks;
+package jcip.ch5_building_blocks.pipeline;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
