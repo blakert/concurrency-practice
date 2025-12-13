@@ -9,7 +9,7 @@ public class PipelineTest {
         // 1. workers in a given pipeline
         // 2. different pipelines so that each pipeline doesn't deal with threadpool overhead.
         Pipeline<String, Integer> pipeline = Pipeline.builder()
-                .withStart(new SourceStage<String>())
+                .withSource(new SourceStage<String>())
                 .concurrentMap(String::trim)
                 .concurrentMap(String::length)
                 .build();

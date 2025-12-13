@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 
-
+// todo: consider widening types to <? super type>
 public class Pipeline<I,O> {
     private final SourceStage<I> sourceStage;
     private final List<PipelineStage<?, ?>> middleStages;
@@ -29,21 +29,21 @@ public class Pipeline<I,O> {
     public static final class Start {
         Start() {}
 
-        <I> AfterStart<I> withStart(SourceStage<I> start) {
+        <I> AfterStart<I> withSource(SourceStage<I> source) {
             BlockingQueue<I> initialQueue = new ArrayBlockingQueue<>(DEFAULT_CAPACITY);
             CountDownLatch doneLatch = new CountDownLatch(1);
-            return new AfterStart<>(start, initialQueue, doneLatch);
+            return new AfterStart<>(source, initialQueue, doneLatch);
         }
     }
 
     public static final class AfterStart<I> {
-        private final SourceStage<I> start;
+        private final SourceStage<I> source;
         private final BlockingQueue<I> currentQueue;
         private final CountDownLatch doneLatch;
-        private AfterStart(SourceStage<I> start,
+        private AfterStart(SourceStage<I> source,
                            BlockingQueue<I> currentQueue,
                            CountDownLatch doneLatch) {
-            this.start = start;
+            this.source = source;
             this.currentQueue = currentQueue;
             this.doneLatch = doneLatch;
         }
@@ -65,7 +65,7 @@ public class Pipeline<I,O> {
             List<PipelineStage<?, ?>> stages = new ArrayList<>();
             stages.add(stage);
 
-            return new AfterStage<>(start, stages, stage, outputQueue, nextLatch);
+            return new AfterStage<>(source, stages, stage, outputQueue, nextLatch);
         }
     }
 
@@ -116,11 +116,11 @@ public class Pipeline<I,O> {
     }
     public static void main(String[] args) {
         Pipeline<Integer, List<Integer>> pipeline = Pipeline.builder()
-                .withStart(new SourceStage<Integer>())
-                .concurrentMap((i) -> Integer.toString(i),1)
-                .concurrentMap(String::toUpperCase, 1)
-                .concurrentMap(Long::parseLong, 1)
-                .concurrentMap((l) -> List.of(1,2,3),1)
+                .withSource(new SourceStage<Integer>())
+                .concurrentMap((i) -> Integer.toString(i))
+                .concurrentMap(String::toUpperCase)
+                .concurrentMap(Long::parseLong)
+                .concurrentMap((l) -> List.of(1,2,3))
                 .build();
     }
 }
